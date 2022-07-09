@@ -147,7 +147,7 @@ class Company(Base):
                 #email
                 container = information_soup.find("p", class_="detailsIcon email")
                 mailto = container.findChildren("a" , recursive=False)
-                email = "";
+                email = ""
                 for element in mailto:
                     email = element['href'].replace("mailto:", "")
 
@@ -208,10 +208,8 @@ class Company(Base):
             if query_results is not None:
                 for company in query_results.scalars():
                     if company.email != "" and company.name != "":
-                        # print(f"{company.name} {company.email} {company.email_sent}")
+
                         email.get_email_content(f"{company.name}")  # Stores email_content in email + replace send_to by company's name
-
-
                         ############################################
                         # Remplacer par f"{company.email}" quand OK
                         ############################################
@@ -230,7 +228,63 @@ class Company(Base):
 
         end = time.time()
         print(f"Execution time : {end - start}s")
-    
+
+    @staticmethod        
+    def send_email_for_testing(test_email_adress: str) -> str:
+        """
+        Send an email for testing 
+        """
+        start = time.time()
+        email = Email()
+
+        try:
+       
+            email.get_email_content(f"T.E.S.T Corp")  
+            email.send_email(test_email_adress) 
+
+            print(f"Test email OK")
+
+        except:
+            print(f"*** No email has been sent ***")
+
+        end = time.time()
+        print(f"Execution time : {end - start}s")  
+
+
+    @staticmethod        
+    def reset_email_sent():
+        """
+        Reset email_sent stats to False
+        """
+        start = time.time()
+        email = Email()
+
+        # Saving in database : table companies 
+        with Session(engine) as session: 
+            query = select(Company).filter(Company.email_sent == "TRUE") 
+            query_results = session.execute(query)
+            total_reset = 0
+
+            # If companies saved in database haven't received an email yet 
+            if query_results is not None:
+                for company in query_results.scalars():
+                    if company.email != "" and company.name != "":
+
+
+                        session.query(Company).\
+                            filter(Company.id == company.id).\
+                            update({'email_sent': False})
+                        total_reset += 1
+
+                session.commit()
+                print(f"Company's email_sent status reset - Total {total_reset}")
+
+            else:
+                print(f"*** No email_sent status has been reset ***")
+
+        end = time.time()
+        print(f"Execution time : {end - start}s")
+
 class Email:
       
     subject: str = ""
@@ -378,4 +432,6 @@ if __name__ == "__main__":
         all_companies = Company.save(companies_links)
 
     if SEND_EMAIL:
-        Company.send_email_to_all()
+        # Company.send_email_to_all()
+        # Company.reset_email_sent()
+        Company.send_email_for_testing("johnbachisuta@gmail.com")
