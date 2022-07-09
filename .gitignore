@@ -3,5 +3,6 @@ __pycache__/**
 # Virtual env
 
 # email content & attachment
-email/attachment/my_email_content.txt
+my_email_content.txt
+email/attachment
 
