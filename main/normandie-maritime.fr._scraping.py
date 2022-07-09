@@ -182,7 +182,7 @@ class Company(Base):
             # All the series with companies' infos are gatheredin one dataframe
             all_companies = pd.DataFrame(list_of_series)
             # Which is stored in the following an excel file
-            all_companies.to_excel("SocietesMaritimes.xlsx") 
+            all_companies.to_excel("../SocietesMaritimes.xlsx") 
 
             print("done")
             return all_companies
@@ -289,17 +289,13 @@ class Email:
       
     subject: str = ""
     text: str = ""
-    img: str = None
     attachment: str = None
-    # send_to: str = ""
-    # mail_to: str = ""
         
-           
     def get_email_content(self, send_to: str):
         """
         Retrieves the content of email_content.txt and store it in an instance of Email
         """
-        f = open("email_content.txt", "r")
+        f = open("../email/content/email_content.txt", "r")
         lines = f.readlines()
         f.close()
         
@@ -328,6 +324,7 @@ class Email:
                     self.subject = trim_line(line)
                 elif ("attachment=" in line) :
                     self.attachment = trim_line(line)
+                    self.attachment = "../email/attachment/" + self.attachment
             else:
                 self.text += format_line(line)
             
@@ -339,7 +336,6 @@ class Email:
         """
         Get the companies email adress stored in the database and send them and email if email_sent =false
         """
-
         start = time.time()
 
         try:
@@ -350,21 +346,6 @@ class Email:
             msg["To"] = mail_to
             msg["From"] = config.outlook_account
             msg.attach(MIMEText(self.text, "html"))  # add text contents
-
-            if VERBOSE:
-                print("OK avant img")
-            # check if we have anything given in the img parameter
-            if self.img is not None:
-                # if we do, we want to iterate through the images, so let's check that
-                # what we have is actually a list
-                if type(self.img) is not list:
-                    img = [self.img]  # if it isn't a list, make it one
-                # now iterate through our list
-                for one_img in img:
-                    img_data = open(one_img, 'rb').read()  # read the image binary data
-                    # attach the image data to MIMEMultipart using MIMEImage, we add
-                    # the given filename use os.basename
-                    msg.attach(MIMEImage(img_data, name=os.path.basename(one_img)))
             
             if VERBOSE:
                 print("OK avant piece jointe")
