@@ -425,7 +425,8 @@ class Email:
 
 if __name__ == "__main__":
     GET_COMPANIES = False
-    SEND_EMAIL = False
+    SEND_EMAIL = True
+    TEST_SETTING = False
 
     if GET_COMPANIES:
         Company.get_all_companies()
@@ -434,3 +435,7 @@ if __name__ == "__main__":
         # Company.send_email_to_all()
         # Company.reset_email_sent()
         Company.send_email_for_testing("johnbachisuta@gmail.com")
+
+    if TEST_SETTING:
+        t = Config.get_setting()["config_location"]
+        print(t)

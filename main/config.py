@@ -24,15 +24,57 @@ class Config:
     DB_NAME: str = None
     outlook_account: str = None
     outlook_password: str = None
+
+    @staticmethod
+    def get_setting() -> dict:
+        """
+        Read the setting.txt file and retrieve informations such as the location 
+        of your own config.txt file if exists. If it doesn't exist the method will 
+        use the default config.txt located at the root of the folder
+        """
+        f = open("../setting.txt", "r")
+        settings = f.readlines()
+        f.close()
+
+        all_settings = {}
+
+        def trim_line(line: str) -> str:
+            """
+            Selects wanted informations in the config.txt removing spaces and variables
+            """
+            line = line.replace("\n", "").split(' ')[1]
+            
+            return line
+
+        for setting in settings:
+            if "#" not in setting:
+
+                if ("config_location" in setting) :
+                    all_settings["config_location"] = trim_line(setting)
+                    
+                    
+        return all_settings    
+
         
 
     def get_infos(self):
         """
         Stores informations inside the config.txt in an instance of Config
         """
-        f = open("/home/jbt/.anshoPwd/config.txt", "r")
-        infos = f.readlines()
-        f.close()
+        settings =  Config.get_setting()
+
+        try:
+            f = open(f"{settings['config_location']}", "r")
+            infos = f.readlines()
+            f.close()
+            print(f'Using {settings["config_location"]}')
+
+        except:
+
+            f = open(f"../config.txt", "r")
+            infos = f.readlines()
+            f.close()
+            print(f'Using default config.txt')
         
         def trim_line(line: str) -> str:
             """
