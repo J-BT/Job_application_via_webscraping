@@ -1,0 +1,23 @@
+# subject=Candidature Spontanée - Jean-Baptiste Theroulde - Développement d'applications
+# attachment=CV_JB_Theroulde.pdf
+#
+#	"send_to" will be replaced by the company's name via get_email_content("{company_s_name}")
+#
+#    [----- Start your text from the next line -----]
+Monsieur LAZARZ,
+
+En consultant votre offre sur Linkedin, j’ai cru comprendre que vous recherchiez une personne
+débrouillarde, flexible et présentant une certaine aversion pour les formulaires en papier...Alors ce qui suit devrait vous intéresser…
+Premièrement, mon caractère et ma personnalité collent beaucoup plus à l’esprit flexible d’une
+récente start-up qu’à l’âme rigide d’une très grande société, comme Acadomia spécialisée dans les
+cours particuliers. 
+
+C'est pourquoi je souhaite travailler chez send_to
+
+En espérant que ma candidature retiendra votre attention, je vous prie
+d’agréer Monsieur LAZARZ, l’expression de mes respectueuses salutations.
+Jean-Baptiste THEROULDE
+
+
+Linkedin : https://www.linkedin.com/in/jeanbaptistetheroulde/
+Portfolio : https://www.jeanbaptistetheroulde.com/
