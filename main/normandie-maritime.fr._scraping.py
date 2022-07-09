@@ -182,7 +182,7 @@ class Company(Base):
             # All the series with companies' infos are gatheredin one dataframe
             all_companies = pd.DataFrame(list_of_series)
             # Which is stored in the following an excel file
-            all_companies.to_excel("../SocietesMaritimes.xlsx") 
+            all_companies.to_excel("../companies/SocietesMaritimes.xlsx") 
 
             print("done")
             return all_companies
@@ -190,6 +190,29 @@ class Company(Base):
         except:
             print("Saving not possible")  
             return ""
+
+    @staticmethod
+    def get_all_companies() -> pd.DataFrame:
+        print("Getting companies's information via web scraping...")
+        try:
+            # Getting url with companies infos
+            companies_links = Company.retrieve_companies_pages()
+            # Creating table : companies if doesn't exist
+            Company.create_table()
+            # Populating table & excel file
+            all_companies = Company.save(companies_links)
+
+            print("All companies are saved")
+            
+            return all_companies
+        
+        except:
+            data = []
+            df = pd.DataFrame(data)
+            print("Something went wrong...")
+            return data
+
+
 
     @staticmethod        
     def send_email_to_all():
@@ -402,15 +425,10 @@ class Email:
 
 if __name__ == "__main__":
     GET_COMPANIES = False
-    SEND_EMAIL = True
+    SEND_EMAIL = False
 
     if GET_COMPANIES:
-        # Getting url with companies infos
-        companies_links = Company.retrieve_companies_pages()
-        # Creating table : companies if doesn't exist
-        Company.create_table()
-        # Populating table & excel file
-        all_companies = Company.save(companies_links)
+        Company.get_all_companies()
 
     if SEND_EMAIL:
         # Company.send_email_to_all()
