@@ -1,0 +1,7 @@
+# Cache
+__pycache__/**
+# Virtual env
+
+# email content & attachment
+email/attachment/my_email_content.txt
+

@@ -318,10 +318,17 @@ class Email:
         """
         Retrieves the content of email_content.txt and store it in an instance of Email
         """
-        f = open("../email/content/email_content.txt", "r")
-        lines = f.readlines()
-        f.close()
         
+        if(os.path.exists('../email/content/my_email_content.txt')):
+            f = open("../email/content/my_email_content.txt", "r")
+            lines = f.readlines()
+            f.close()
+        else:
+            f = open("../email/content/email_content.txt", "r")
+            lines = f.readlines()
+            f.close()
+        
+    
         def format_line(line: str) -> str:
             """
             Replaces '\n' by '<br/>' in email_content.txt and send_to by company's name
@@ -348,6 +355,8 @@ class Email:
                 elif ("attachment=" in line) :
                     self.attachment = trim_line(line)
                     self.attachment = "../email/attachment/" + self.attachment
+                    if self.attachment == "../email/attachment/":
+                        self.attachment = None
             else:
                 self.text += format_line(line)
             
