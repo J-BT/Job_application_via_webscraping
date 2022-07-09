@@ -4,5 +4,5 @@ __pycache__/**
 
 # email content & attachment
 my_email_content.txt
-email/attachment
+email/attachment/
 
