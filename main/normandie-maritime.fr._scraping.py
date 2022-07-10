@@ -471,21 +471,24 @@ if __name__ == "__main__":
     ## Save companies in the database ###
     GET_COMPANIES = False
 
-    ## Emails ###
+    ## (Test) emails ###
     RESET_EMAIL_SENT_STATUS = False
     SEND_ONE_EMAIL_FOR_TESTING = False
     SEND_EMAIL_TO_ALL_COMPANIES_FOR_TESTING = False
+
+    ## Emails ###
     SEND_EMAIL_TO_ALL_COMPANIES = False
 
+    ## Settings ###
     PRINT_SETTINGS = False
 
     if GET_COMPANIES:
         Company.get_all_companies()
 
     if SEND_ONE_EMAIL_FOR_TESTING:
-        Company.send_email_for_testing("johnbachisuta@gmail.com")
+        Company.send_email_for_testing("your_adress_for_testing@goes_here.com")
     if SEND_EMAIL_TO_ALL_COMPANIES_FOR_TESTING:
-        Company.send_email_to_all_for_testing("johnbachisuta@gmail.com")
+        Company.send_email_to_all_for_testing("your_adress_for_testing@goes_here.com")
     if SEND_EMAIL_TO_ALL_COMPANIES:
         Company.send_email_to_all()
     if RESET_EMAIL_SENT_STATUS:
