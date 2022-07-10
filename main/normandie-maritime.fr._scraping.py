@@ -474,7 +474,7 @@ if __name__ == "__main__":
     ## (Test) emails ###
     RESET_EMAIL_SENT_STATUS = False
     SEND_ONE_EMAIL_FOR_TESTING = False
-    SEND_EMAIL_TO_ALL_COMPANIES_FOR_TESTING = True
+    SEND_EMAIL_TO_ALL_COMPANIES_FOR_TESTING = False
 
     ## Emails ###
     SEND_EMAIL_TO_ALL_COMPANIES = False
