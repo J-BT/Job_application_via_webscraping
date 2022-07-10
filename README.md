@@ -2,8 +2,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://www.normandie-maritime.fr)
-
 Young graduate, people changing career or just seeking a new job, everyone know how tedious it can be to send speculative applications...
 It takes a lot of time to find companies that can fit to your professional professional expectations...
 
