@@ -5,7 +5,7 @@
 Young graduate, people changing career or just seeking a new job, everyone know how tedious it can be to send speculative applications...
 It takes a lot of time to find companies that can fit to your professional expectations...
 
-And even if you're lucky enough to find some, you must :
+And even if you're lucky enough to find some, you still must :
 * Look for its email adress (In case there's not a section for applicant)
 * Write and send a email with an attachment such as your resume or cover letter
 
@@ -16,4 +16,15 @@ If you wish to apply to 100 companies, it will take at 300 minutes, which means 
 Here is why Job_application_via_webscraping can be helpful for you !
 
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+## Getting Started
+
+
+
+### Prerequisites
+
+
+
+### Installation
+
+
+<p align="right"><a href="#top">back to top</a></p>
