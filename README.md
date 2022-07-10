@@ -6,7 +6,7 @@ Young graduate, people changing career or just seeking a new job, everyone know 
 It takes a lot of time to find companies that can fit to your professional expectations...
 
 And even if you're lucky enough to find some, you still must :
-* Look for its email adress (In case there's not a section for applicant)
+* Look for its email adress (In case there's not a section for applicants)
 * Write and send a email with an attachment such as your resume or cover letter
 
 Of course, it's not impossible...but it is really timeconsuming ! 
