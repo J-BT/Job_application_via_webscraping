@@ -142,7 +142,7 @@ class Company(Base):
                     website = information_soup.find("a",  class_="detailsIcon url")['href']
 
                 except:
-                    website = "Nan"
+                    website = "NaN"
 
                 #email
                 container = information_soup.find("p", class_="detailsIcon email")
@@ -150,6 +150,8 @@ class Company(Base):
                 email = ""
                 for element in mailto:
                     email = element['href'].replace("mailto:", "")
+                    if email == "":
+                        email = "NaN"
 
                 #address
                 address = information_soup.find("p",  class_="detailsIcon adresse").text
@@ -230,13 +232,46 @@ class Company(Base):
             # If companies saved in database haven't received an email yet 
             if query_results is not None:
                 for company in query_results.scalars():
-                    if company.email != "" and company.name != "":
+                    if company.email != "NaN" and company.name != "" and company.website != "NaN":
 
                         email.get_email_content(f"{company.name}")  # Stores email_content in email + replace send_to by company's name
-                        ############################################
-                        # Remplacer par f"{company.email}" quand OK
-                        ############################################
-                        email.send_email("johnbachisuta@gmail.com") 
+                        email.send_email(f"{company.email}") 
+
+                        session.query(Company).\
+                            filter(Company.id == company.id).\
+                            update({'email_sent': True})
+                        total_email_sent += 1
+
+                session.commit()
+                print(f"Emails sent to all the companies - Total {total_email_sent}")
+
+            else:
+                print(f"*** No email has been sent ***")
+
+        end = time.time()
+        print(f"Execution time : {end - start}s")
+
+    @staticmethod        
+    def send_email_to_all_for_testing(adress_for_testing: str):
+        """
+        Takes an email adress as parameter and sends it n emails.
+            n = number of companis stored in the database if email_sent == False
+        """
+        start = time.time()
+        email = Email()
+
+        # Saving in database : table companies 
+        with Session(engine) as session: 
+            query = select(Company).filter(Company.email_sent == "FALSE") 
+            query_results = session.execute(query)
+            total_email_sent = 0
+            # If companies saved in database haven't received an email yet 
+            if query_results is not None:
+                for company in query_results.scalars():
+                    if company.email != "NaN" and company.name != "" and company.website != "NaN":
+
+                        email.get_email_content(f"{company.name}")  # Stores email_content in email + replace send_to by company's name
+                        email.send_email(adress_for_testing) 
 
                         session.query(Company).\
                             filter(Company.id == company.id).\
@@ -433,18 +468,28 @@ class Email:
   
 
 if __name__ == "__main__":
+    ## Save companies in the database ###
     GET_COMPANIES = False
-    SEND_EMAIL = True
-    TEST_SETTING = False
+
+    ## Emails ###
+    RESET_EMAIL_SENT_STATUS = False
+    SEND_ONE_EMAIL_FOR_TESTING = False
+    SEND_EMAIL_TO_ALL_COMPANIES_FOR_TESTING = False
+    SEND_EMAIL_TO_ALL_COMPANIES = False
+
+    PRINT_SETTINGS = False
 
     if GET_COMPANIES:
         Company.get_all_companies()
 
-    if SEND_EMAIL:
-        # Company.send_email_to_all()
-        # Company.reset_email_sent()
+    if SEND_ONE_EMAIL_FOR_TESTING:
         Company.send_email_for_testing("johnbachisuta@gmail.com")
-
-    if TEST_SETTING:
-        t = Config.get_setting()["config_location"]
-        print(t)
+    if SEND_EMAIL_TO_ALL_COMPANIES_FOR_TESTING:
+        Company.send_email_to_all_for_testing("johnbachisuta@gmail.com")
+    if SEND_EMAIL_TO_ALL_COMPANIES:
+        Company.send_email_to_all()
+    if RESET_EMAIL_SENT_STATUS:
+        Company.reset_email_sent()
+        
+    if PRINT_SETTINGS:
+        print(Config.get_setting())
